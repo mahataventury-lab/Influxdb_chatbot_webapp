@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>PLC Chatbot</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="chat-panel" aria-label="PLC chatbot">
+        <header class="topbar">
+          <div>
+            <h1>PLC Chatbot</h1>
+            <p>InfluxDB sensor data with Ollama analysis</p>
+          </div>
+          <div class="status-stack">
+            <div class="status-pill" id="sourceBadge">Ready</div>
+            <div class="refresh-note" id="refreshNote">Not refreshed yet</div>
+          </div>
+        </header>
+
+        <div class="quick-row" aria-label="Quick questions">
+          <button type="button" data-health-check="true">Check system</button>
+          <button type="button" data-question="highest temperature?">Highest temp</button>
+          <button type="button" data-question="last 5 temperature?">Last 5 temp</button>
+          <button type="button" data-question="Show IQR outliers">IQR outliers</button>
+          <button type="button" data-question="current status?">Status</button>
+          <button type="button" data-question="Give me a short report about the PLC condition">Report</button>
+        </div>
+
+        <div class="messages" id="messages" aria-live="polite">
+          <article class="message bot">
+            <div class="bubble">Ask about temperature, pressure, status, recent values, IQR outliers, or the PLC condition.</div>
+          </article>
+        </div>
+
+        <form class="composer" id="chatForm">
+          <input
+            id="messageInput"
+            name="message"
+            type="text"
+            autocomplete="off"
+            placeholder="Ask about the PLC..."
+            aria-label="Chat message"
+          />
+          <button type="submit">Send</button>
+        </form>
+      </section>
+    </main>
+
+    <script src="/app.js"></script>
+  </body>
+</html>

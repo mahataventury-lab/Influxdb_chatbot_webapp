@@ -1,0 +1,50 @@
+const mqtt = require("mqtt");
+
+// Change these to match your broker
+const BROKER_URL = "mqtt://broker.emqx.io:1883";
+const TOPIC = "tania/fakeplc/data";
+
+// Simulated PLC state
+let temperature = 24.0;
+let pressure = 1.2;
+let running = true;
+let machineId = "plc1";
+let line = "A";
+
+const client = mqtt.connect(BROKER_URL);
+
+client.on("connect", () => {
+  console.log("Connected to MQTT broker");
+
+  // Publish fake PLC data every 3 seconds
+  setInterval(() => {
+    // Small random movement to simulate live sensor values
+    temperature = +(temperature + (Math.random() * 2 - 1)).toFixed(2);
+    pressure = +(pressure + (Math.random() * 0.1 - 0.05)).toFixed(2);
+
+    // Keep values in a reasonable range
+    temperature = Math.max(20, Math.min(35, temperature));
+    pressure = Math.max(1.0, Math.min(2.0, pressure));
+
+    const payload = {
+      machineId,
+      line,
+      temperature,
+      pressure,
+      status: running ? "running" : "stopped",
+      timestamp: new Date().toISOString(),
+    };
+
+    client.publish(TOPIC, JSON.stringify(payload), (err) => {
+      if (err) {
+        console.error("Publish failed:", err.message || err);
+      } else {
+        console.log("Published to:", TOPIC, payload);
+      }
+    });
+  }, 3000);
+});
+
+client.on("error", (err) => {
+  console.error("MQTT error:", err.message || err);
+});

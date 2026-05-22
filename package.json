@@ -1,0 +1,17 @@
+{
+  "name": "learning_connection",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "chatbot-ui": "node chatbot_ui_server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "mqtt": "^5.15.1",
+    "telegraf": "^4.16.3"
+  }
+}
